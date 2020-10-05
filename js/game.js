@@ -47,7 +47,8 @@ function getPointGen() {
 	if (hasUpg("s", 21)) gain = gain.times(2)
 
     // multipliers
-    if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
+	if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
+	gain = gain.times(layers["n"].effect())
 	return gain
 }
 

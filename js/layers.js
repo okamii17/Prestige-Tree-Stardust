@@ -215,7 +215,7 @@ addLayer("s", {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
-        if(player.n["points"].gte(1)) mult = mult.times(layers["n"].effect.stardustBoost)
+        if(player.n["points"].gte(1)) mult = mult.times(layers["n"].effect()).max(1)
         return mult
     },
     gainExp() {
@@ -300,12 +300,11 @@ addLayer("so", {
     }},
     effect() {
         let boostBase = 2
-        return {
-        stardustBoost: (player[this.layer].points.times(boostBase))
-    }},
+        return player[this.layer].points.times(boostBase)
+    },
     effectDescription() {
         eff = this.effect;
-        return "which are boosting stardust gain by "+format(eff.stardustBoost)+"."
+        return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
     requires() {return new Decimal(200)}, 
@@ -359,12 +358,11 @@ addLayer("n", {
     }},
     effect() {
         let boostBase = 2
-        return {
-        pointBoost: (player[this.layer].points.times(boostBase))
-    }},
+        return player[this.layer].points.times(boostBase)
+    },
     effectDescription() {
         eff = this.effect;
-        return "which are boosting point gain by "+format(eff.pointBoost)+"."
+        return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
     requires() {return new Decimal(200)}, 
