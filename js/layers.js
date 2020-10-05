@@ -204,7 +204,7 @@ addLayer("s", {
         best: new Decimal(0),
         total: new Decimal(0),
     }},
-    color:() => "#444444",
+    color:() => "#101010",
     requires() {return new Decimal(10)}, 
     resource: "stardust", 
     baseResource: "points", 
