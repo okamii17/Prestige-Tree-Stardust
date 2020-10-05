@@ -300,7 +300,7 @@ addLayer("so", {
     }},
     effect() {
         let boostBase = 2
-        return max(1,player[this.layer].points.times(boostBase))
+        return max(1,player["so"].points.times(boostBase))
     },
     effectDescription() {
         eff = this.effect;
@@ -358,7 +358,7 @@ addLayer("n", {
     }},
     effect() {
         let boostBase = 2
-        return max(1,player[this.layer].points.times(boostBase))
+        return max(1,player["n"].points.times(boostBase))
     },
     effectDescription() {
         eff = this.effect;
