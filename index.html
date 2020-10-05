@@ -2,13 +2,13 @@
 <head>
 	<script>
 		const modInfo = {
-			name: "The Modding Tree",
+			name: "The Stardust Tree",
 			id: "modbase",
 			pointsName: "points",
 			offlineLimit: 1  // In hours
 		}
 	</script>
-	<title>The Modding Tree</title>
+	<title>The Stardust Tree</title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
 	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
@@ -45,43 +45,9 @@
 		</div>
 		<div v-if="player.tab=='changelog'" class="col right">
 			<button class="back" onclick="showTab('tree')">←</button><br>
-			<h3>v1.2.4</h3>
+			<h3>Alpha 1: hm...</h3>
 			<ul>
-				<li>Layers are now highlighted if you can buy an upgrade, and a new feature, shouldNotify, lets you make it highlight other ways.</li>
-				<li>Fixed bugs with hasUpg, hasChall, hasMilestone, and inChallenge.</li>
-				<li>Changed the sample code to use the above functions for convenience.</li>
-			</ul><br>
-			<h3>v1.2.3</h3>
-			<ul>
-				<li>Added a row component, which displays a list of objects in a row.</li>
-				<li>Added a column component, which displays a list of objects in a column (useful within a row).</li>
-				<li>Changed blanks to have a customizable width and height.</li>
-			</ul><br>
-			<h3>v1.2: This Changes Everything!</h3>
-			<ul>
-				<li>Many layer features can now be static values or functions. (This made some notations change, which will break things)</li>
-				<li>You can now use the "this" keyword, to make code easier to transfer when making new layers. Also added "this.layer", which is the current layer's name, and works on existing subfeatures (e.g. individual upgrades) as well! Subfeatures also have "this.id".</li>
-				<li>Fixed a big save issue. If you use a unique mod id, your save will never conflict with other mods.</li>
-				<li>Added a configurable offline time limit in modinfo at the top of index.html. (default 1 hour)</li>
-				<li>Added a few minor features, and updated the docs with new information.</li>
-			</ul><br>
-			<div class="link" onclick="showTab('old-stuff')">Alpha / Beta</div><br>
-		</div>
-		<div v-if="player.tab=='old-stuff'" class="col right">
-			<button class="back" onclick="showTab('changelog')">←</button><br>
-			<h3>v1.1.1</h3>
-			<ul>
-				<li>You can define hotkeys in layer config.</li>
-			</ul><br>
-			<h3>v1.1: Enhanced Edition</h3>
-			<ul>
-				<li>Added "Buyables", which can function like Space Buildings or Enhancers.</li>
-				<li>Custom CSS can now be used on any component! Make the third argument an object with the CSS parameters.</li>
-				<li>Lots of minor good things.</li>
-			</ul><br>
-			<h3>v1.0: Technically Something</h3>
-			<ul>
-				<li>The first numbered version.</li>
+				<li>Initialized two layers. Added three upgrades. Nothing else.</li>
 			</ul><br>
 			
 		</div>
@@ -147,12 +113,12 @@
 			<br><br><br><br><br>
 			<!-- *************************** Modify the tree in the table below! *************************** -->
 			<table>
-				<td><layer-node layer='c' abb='C'></layer-node></td>
+				<td><layer-node layer="s" abb="S"></layer-node></td>
 			</table><table>
 				<td><button class="treeNode hidden"></button></td>
 			</table><table>
-				<td v-if="player.tab=='tree'&&(player.c.unl||player.c.unl)" class="left"><br><br><img class="remove" src="remove.png" onclick="resetRow(1)"></img></td>
-				<td><layer-node layer='f' abb='F'></layer-node></td>
+				<td v-if="player.tab=='tree'&&(player.s.unl||player.s.unl)" class="left"><br><br><img class="remove" src="remove.png" onclick="resetRow(1)"></img></td>
+				<td><layer-node layer="c" abb="C"></layer-node></td>
 			</table><table>
 				<td><button class="treeNode hidden"></button></td>
 			</table>

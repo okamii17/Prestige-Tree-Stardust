@@ -1,4 +1,4 @@
-addLayer("c", {
+/* addLayer("c", {
         layer: "c", // This is assigned automatically, both to the layer and all upgrades, etc. Shown here so you know about it
         startData() { return {
             unl: true,
@@ -196,31 +196,80 @@ addLayer("c", {
                          // Layer will automatically highlight if an upgrade is purchasable.
             return (player.c.buyables[11] == 1)
         }
-})
-
-addLayer("f", {
-        startData() { return {
-            unl: false,
-			points: new Decimal(0),
-            boop: false,
-        }},
-        color:() => "#FE0102",
-        requires() {return new Decimal(200)}, 
-        resource: "farm points", 
-        baseResource: "candies", 
-        baseAmount() {return player.points},
-        type: "normal", 
-        exponent: 0.5, 
-        gainMult() {
-            return new Decimal(1)
+}) */
+addLayer("s", {
+    startData() { return {
+        unl: false,
+              points: new Decimal(0),
+        best: new Decimal(0),
+        total: new Decimal(0),
+    }},
+    color:() => "#000000",
+    requires() {return new Decimal(10)}, 
+    resource: "stardust", 
+    baseResource: "points", 
+    baseAmount() {return player.points},
+    type: "normal", 
+    exponent: 0.5, 
+    gainMult() {
+        return new Decimal(1)
+    },
+    gainExp() {
+        return new Decimal(1)
+    },
+    upgrades: {
+        rows: 1,
+        cols: 3,
+        11: {
+            title:() => "Start.",
+            desc:() => "Gain 1 Point every second.",
+            cost:() => new Decimal(1),
+            unl() { return player[this.layer].unl }, // The upgrade is only visible when this is true
         },
-        gainExp() {
-            return new Decimal(1)
+        12: {
+            title:() => "Amplify.",
+            desc:() => "Add 2 to the point generation base.",
+            cost:() => new Decimal(1),
+            unl() { return (hasUpg(this.layer, 11))},
         },
-        row: 1,
-        layerShown() {return true}, 
-        branches: [["c", 1]] // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
-    }, 
+        13: {
+            title:() => "Expand space.",
+            desc:() => "Increase point generation based on unspent stardust.",
+            cost:() => new Decimal(5),
+            unl() { return (hasUpg(this.layer, 12))},
+            effect() {
+              return player[this.layer].points.add(1).pow(1/3)
+            }
+        },
+    },
+    update(diff) {
+        if (player[this.layer].upgrades.includes(11)) player.points = player.points.add(tmp.pointGen.times(diff)).max(0)
+    },
+    row: 0,
+    layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
+}, 
 )
-
-
+addLayer("c", {
+    startData() { return {
+        unl: false,
+              points: new Decimal(0),
+        best: new Decimal(0),
+        total: new Decimal(0),
+    }},
+    color:() => "#8080b0",
+    requires() {return new Decimal(1000000)}, 
+    resource: "crystal", 
+    baseResource: "stardust", 
+    baseAmount() {return player.s.points},
+    type: "normal", 
+    exponent: 0.5, 
+    gainMult() {
+        return new Decimal(1)
+    },
+    gainExp() {
+        return new Decimal(1)
+    },
+    row: 0,
+    layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
+}, 
+)

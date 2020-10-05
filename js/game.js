@@ -42,7 +42,8 @@ function getStartPlayer() {
 
 function getPointGen() {
 	let gain = new Decimal(1)
-	if (hasUpg("c", 12)) gain = gain.times(layers.c.upgrades[12].effect())
+	if (hasUpg("s", 12)) gain = gain.add(2)
+  if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
 	return gain
 }
 
