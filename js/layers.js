@@ -270,9 +270,10 @@ addLayer("s", {
             desc:() => "This does nothing as of yet.",
             cost:() => new Decimal(65536),
             unl() { return (hasUpg(this.layer, 22))},
+        },
         24: {
             title:() => "Placeholder title.",
-            desc:() => "Points further increase stardust gain.",
+            desc:() => "You probably should not be looking here.",
             cost:() => new Decimal(131072),
             unl() { return (hasUpg(this.layer, 23))},
         },
