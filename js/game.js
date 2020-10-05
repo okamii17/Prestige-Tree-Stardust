@@ -5,8 +5,8 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
-	num: "1.2.4",
-	name: "This changes everything!"
+	num: "Alpha 1",
+	name: "There's nothing here."
 }
 
 function startPlayerBase() {
