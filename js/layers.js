@@ -215,6 +215,7 @@ addLayer("s", {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
+        if(player.n["points"].gte(1)) mult = mult.times(layers["n"].effect.stardustBoost)
         return mult
     },
     gainExp() {
@@ -297,8 +298,17 @@ addLayer("so", {
         best: new Decimal(0),
         total: new Decimal(0),
     }},
+    effect() {
+        let boostBase = 2
+        return {
+        stardustBoost: (player[this.layer].points.times(boostBase))
+    }},
+    effectDescription() {
+        eff = this.effect;
+        return "which are boosting stardust gain by "+format(eff.stardustBoost)+"."
+    },
     color:() => "#fadb6b",
-    requires() {return new Decimal(500)}, 
+    requires() {return new Decimal(200)}, 
     resource: "stars", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
@@ -324,7 +334,7 @@ addLayer("c", {
     }},
     color:() => "#8080b0",
     requires() {return new Decimal(1000000)}, 
-    resource: "crystal", 
+    resource: "crystals", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
     type: "normal", 
@@ -347,8 +357,17 @@ addLayer("n", {
         best: new Decimal(0),
         total: new Decimal(0),
     }},
+    effect() {
+        let boostBase = 2
+        return {
+        pointBoost: (player[this.layer].points.times(boostBase))
+    }},
+    effectDescription() {
+        eff = this.effect;
+        return "which are boosting point gain by "+format(eff.pointBoost)+"."
+    },
     color:() => "#6541d1",
-    requires() {return new Decimal(500)}, 
+    requires() {return new Decimal(200)}, 
     resource: "nebulae", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
