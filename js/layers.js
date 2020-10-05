@@ -303,7 +303,7 @@ addLayer("so", {
         return max(1,player["so"].points.times(boostBase))
     },
     effectDescription() {
-        eff = this.effect;
+        eff = this.effect();
         return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
@@ -361,7 +361,7 @@ addLayer("n", {
         return max(1,player["n"].points.times(boostBase))
     },
     effectDescription() {
-        eff = this.effect;
+        eff = this.effect();
         return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
