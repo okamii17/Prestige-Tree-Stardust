@@ -212,14 +212,16 @@ addLayer("s", {
     type: "normal", 
     exponent: 0.5, 
     gainMult() {
-        return new Decimal(1)
+        mult = new Decimal(1)
+        if(hasUpg(this.layer, 14)) mult = mult.times(3)
+        return mult
     },
     gainExp() {
         return new Decimal(1)
     },
     upgrades: {
         rows: 1,
-        cols: 3,
+        cols: 4,
         11: {
             title:() => "Start.",
             desc:() => "Gain 1 Point every second.",
@@ -235,12 +237,18 @@ addLayer("s", {
         13: {
             title:() => "Expand space.",
             desc:() => "Increase point generation based on unspent stardust.",
-            cost:() => new Decimal(5),
+            cost:() => new Decimal(4),
             unl() { return (hasUpg(this.layer, 12))},
             effect() {
               return player[this.layer].points.add(1).pow(1/3)
             }
         },
+        14: {
+            title:() => "Extend reach.",
+            desc:() => "Stardust gain is tripled.",
+            cost:() => new Decimal(10),
+            unl() { return (hasUpg(this.layer, 13))},
+        }
     },
     update(diff) {
         if (player[this.layer].upgrades.includes(11)) player.points = player.points.add(tmp.pointGen.times(diff)).max(0)
