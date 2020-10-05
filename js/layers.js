@@ -204,7 +204,7 @@ addLayer("s", {
         best: new Decimal(0),
         total: new Decimal(0),
     }},
-    color:() => "#101010",
+    color:() => "#404060",
     requires() {return new Decimal(10)}, 
     resource: "stardust", 
     baseResource: "points", 
@@ -214,6 +214,7 @@ addLayer("s", {
     gainMult() {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
+        if(hasUpg(this.layer, 16)) mult = mult.times(layers["s"].upgrades[16].effect())
         return mult
     },
     gainExp() {
@@ -221,7 +222,7 @@ addLayer("s", {
     },
     upgrades: {
         rows: 1,
-        cols: 4,
+        cols: 6,
         11: {
             title:() => "Start.",
             desc:() => "Gain 1 Point every second.",
@@ -248,13 +249,31 @@ addLayer("s", {
             desc:() => "Stardust gain is tripled.",
             cost:() => new Decimal(10),
             unl() { return (hasUpg(this.layer, 13))},
-        }
+        },
+        15: {
+            title:() => "Magnify.",
+            desc:() => "Double the point generation base.",
+            cost:() => new Decimal(25),
+            unl() { return (hasUpg(this.layer, 14))},
+        },
+        16: {
+            title:() => "Placeholder title.",
+            desc:() => "Points further increase stardust gain.",
+            cost:() => new Decimal(90),
+            unl() { return (hasUpg(this.layer, 15))},
+            effect() {
+                return player.points.add(1).pow(1/3)
+              }
+        },
     },
     update(diff) {
         if (player[this.layer].upgrades.includes(11)) player.points = player.points.add(tmp.pointGen.times(diff)).max(0)
     },
     row: 0,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
+    tabFormat: ["main-display",
+    ["prestige-button", function() {return "Use your points to collect "}],
+    ],
 }, 
 )
 addLayer("c", {

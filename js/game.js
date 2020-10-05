@@ -5,7 +5,7 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
-	num: "Alpha 1",
+	num: "Alpha 2",
 	name: "There's nothing here."
 }
 
@@ -41,9 +41,13 @@ function getStartPlayer() {
 }
 
 function getPointGen() {
+	// base gen
 	let gain = new Decimal(1)
 	if (hasUpg("s", 12)) gain = gain.add(2)
-  if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
+	if (hasUpg("s", 15)) gain = gain.times(2)
+
+    // multipliers
+    if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
 	return gain
 }
 
