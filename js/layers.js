@@ -215,6 +215,7 @@ addLayer("s", {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
+        if(player.so["points"].gte(1)) mult = mult.times(layers["so"].effect.stardustBoost)
         return mult
     },
     gainExp() {
@@ -343,7 +344,7 @@ addLayer("c", {
 addLayer("n", {
     startData() { return {
         unl: false,
-              points: new Decimal(0),
+        points: new Decimal(0),
         best: new Decimal(0),
         total: new Decimal(0),
     }},
