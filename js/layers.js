@@ -260,10 +260,21 @@ addLayer("s", {
             title:() => "Placeholder title.",
             desc:() => "Points further increase stardust gain.",
             cost:() => new Decimal(50),
-            unl() { return (hasUpg(this.layer, 15))},
+            unl() { return (hasUpg(this.layer, 21))},
             effect() {
                 return player.points.add(1).pow(1/5)
             }
+        },
+        23: {
+            title:() => "Placeholder title.",
+            desc:() => "This does nothing as of yet.",
+            cost:() => new Decimal(65536),
+            unl() { return (hasUpg(this.layer, 22))},
+        24: {
+            title:() => "Placeholder title.",
+            desc:() => "Points further increase stardust gain.",
+            cost:() => new Decimal(131072),
+            unl() { return (hasUpg(this.layer, 23))},
         },
     },
     hotkeys: [
