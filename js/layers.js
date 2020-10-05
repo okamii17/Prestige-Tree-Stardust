@@ -215,7 +215,7 @@ addLayer("s", {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
-        if(player.n["points"].gte(1)) mult = mult.times(layers["n"].effect()).max(1)
+        if(player.n["points"].gte(1)) mult = mult.times(layers["n"].effect())
         return mult
     },
     gainExp() {
@@ -300,7 +300,7 @@ addLayer("so", {
     }},
     effect() {
         let boostBase = 2
-        return player[this.layer].points.times(boostBase)
+        return max(1,player[this.layer].points.times(boostBase))
     },
     effectDescription() {
         eff = this.effect;
@@ -358,7 +358,7 @@ addLayer("n", {
     }},
     effect() {
         let boostBase = 2
-        return player[this.layer].points.times(boostBase)
+        return max(1,player[this.layer].points.times(boostBase))
     },
     effectDescription() {
         eff = this.effect;
