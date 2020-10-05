@@ -214,15 +214,15 @@ addLayer("s", {
     gainMult() {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
-        if(hasUpg(this.layer, 16)) mult = mult.times(layers["s"].upgrades[16].effect())
+        if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
         return mult
     },
     gainExp() {
         return new Decimal(1)
     },
     upgrades: {
-        rows: 1,
-        cols: 6,
+        rows: 2,
+        cols: 4,
         11: {
             title:() => "Start.",
             desc:() => "Gain 1 Point every second.",
@@ -250,27 +250,56 @@ addLayer("s", {
             cost:() => new Decimal(10),
             unl() { return (hasUpg(this.layer, 13))},
         },
-        15: {
+        21: {
             title:() => "Magnify.",
             desc:() => "Double the point generation base.",
             cost:() => new Decimal(25),
             unl() { return (hasUpg(this.layer, 14))},
         },
-        16: {
+        22: {
             title:() => "Placeholder title.",
             desc:() => "Points further increase stardust gain.",
-            cost:() => new Decimal(90),
+            cost:() => new Decimal(50),
             unl() { return (hasUpg(this.layer, 15))},
             effect() {
-                return player.points.add(1).pow(1/3)
+                return player.points.add(1).pow(1/5)
             }
         },
     },
+    hotkeys: [
+        {key: "s", // What the hotkey button is. Use uppercase if it's combined with shift, or "ctrl+x" if ctrl is.
+        desc: "s: reset your points for stardust", // The description of the hotkey used in the How To Play
+        onPress(){if (player.s.unl) doReset("s")}}, // This function is called when the hotkey is pressed.
+    ],
     update(diff) {
         if (player[this.layer].upgrades.includes(11)) player.points = player.points.add(tmp.pointGen.times(diff)).max(0)
     },
     row: 0,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
+}, 
+)
+addLayer("so", {
+    startData() { return {
+        unl: false,
+              points: new Decimal(0),
+        best: new Decimal(0),
+        total: new Decimal(0),
+    }},
+    color:() => "#fadb6b",
+    requires() {return new Decimal(500)}, 
+    resource: "stars", 
+    baseResource: "stardust", 
+    baseAmount() {return player.s.points},
+    type: "normal", 
+    exponent: 0.5, 
+    gainMult() {
+        return new Decimal(1)
+    },
+    gainExp() {
+        return new Decimal(1)
+    },
+    row: 1,
+    layerShown() {return layers["s"].best.gte(80)},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
 }, 
 )
 addLayer("c", {
@@ -295,5 +324,29 @@ addLayer("c", {
     },
     row: 0,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
+}, 
+)
+addLayer("n", {
+    startData() { return {
+        unl: false,
+              points: new Decimal(0),
+        best: new Decimal(0),
+        total: new Decimal(0),
+    }},
+    color:() => "#6541d1",
+    requires() {return new Decimal(500)}, 
+    resource: "nebulae", 
+    baseResource: "stardust", 
+    baseAmount() {return player.s.points},
+    type: "normal", 
+    exponent: 0.5, 
+    gainMult() {
+        return new Decimal(1)
+    },
+    gainExp() {
+        return new Decimal(1)
+    },
+    row: 1,
+    layerShown() {return layers["s"].best.gte(80)},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
 }, 
 )
