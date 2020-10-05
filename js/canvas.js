@@ -27,11 +27,13 @@ var colors = {
 		1: "#ffffff",
 		2: "#bfbfbf",
 		3: "#7f7f7f",
+		4: "#8080b0",
 	},
 	aqua: {
 		1: "#bfdfff",
 		2: "#8fa7bf",
 		3: "#5f6f7f",
+		4: "#8080b0",
 	},
 }
 var colors_theme

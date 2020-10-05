@@ -5,7 +5,7 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
-	num: "Alpha 2",
+	num: "Alpha 3",
 	name: "There's nothing here."
 }
 
