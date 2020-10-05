@@ -311,7 +311,7 @@ addLayer("so", {
         return new Decimal(1)
     },
     row: 1,
-    layerShown() {return player[this.layer].points.gte(80)},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
+    layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
 }, 
 )
 addLayer("c", {
@@ -359,6 +359,6 @@ addLayer("n", {
         return new Decimal(1)
     },
     row: 1,
-    layerShown() {return player[this.layer].points.gte(80)},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
+    layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
 }, 
 )
