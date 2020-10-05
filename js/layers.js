@@ -263,7 +263,7 @@ addLayer("s", {
             unl() { return (hasUpg(this.layer, 15))},
             effect() {
                 return player.points.add(1).pow(1/3)
-              }
+            }
         },
     },
     update(diff) {
@@ -271,9 +271,6 @@ addLayer("s", {
     },
     row: 0,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
-    tabFormat: ["main-display",
-    ["prestige-button", function() {return "Use your points to collect "}],
-    ],
 }, 
 )
 addLayer("c", {
