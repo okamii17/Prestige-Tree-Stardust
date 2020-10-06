@@ -215,6 +215,7 @@ addLayer("s", {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
+
         mult = mult.times(layers["so"].effect("stardustBoost"))
         mult = mult.times(tmp.buyables["n"][13].effect["second"])
         return mult

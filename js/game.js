@@ -51,6 +51,7 @@ function getPointGen() {
 	gain = gain.times(layers["n"].effect())
   gain = gain.mul(tmp.buyables["n"][11].effect["first"])
   gain = gain.div(tmp.buyables["n"][13].effect["first"])
+
 	return gain
 }
 
