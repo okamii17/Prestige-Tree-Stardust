@@ -360,6 +360,11 @@ addLayer("so", {
                 },
             },
         },
+        hotkeys: [
+            {key: "S", 
+            desc: "Shift-s: reset your stardust for stars",
+            onPress(){if (player.so.unl) doReset("so")}},
+        ],
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 2]]
@@ -538,6 +543,11 @@ addLayer("n", {
                 },
             },
         },
+        hotkeys: [
+            {key: "n", 
+            desc: "n: reset your stardust for nebulas",
+            onPress(){if (player.n.unl) doReset("n")}},
+        ],
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 2]]
