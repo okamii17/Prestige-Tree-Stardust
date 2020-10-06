@@ -216,7 +216,7 @@ addLayer("s", {
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
 
-        mult = mult.times(layers["so"].effect("stardustBoost"))
+        mult = mult.times(layers["n"].effect())
         mult = mult.times(tmp.buyables["n"][13].effect["second"])
         return mult
     },
@@ -306,7 +306,7 @@ addLayer("so", {
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting stardust gain by "+format(eff)+"."
+        return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
     requires() {return new Decimal(200)}, 
@@ -408,7 +408,7 @@ addLayer("n", {
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting point gain by "+format(eff)+"."
+        return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
     requires() {return new Decimal(50)}, 
