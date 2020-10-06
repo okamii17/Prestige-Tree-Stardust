@@ -215,7 +215,11 @@ addLayer("s", {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
+<<<<<<< Updated upstream
         if(player.so["points"].gte(1)) mult = mult.times(layers["so"].effect())
+=======
+        mult = mult.times(layers["so"].effect("stardustBoost"))
+>>>>>>> Stashed changes
         return mult
     },
     gainExp() {
@@ -242,7 +246,7 @@ addLayer("s", {
             cost:() => new Decimal(4),
             unl() { return (hasUpg(this.layer, 12))},
             effect() {
-              return player[this.layer].points.add(1).pow(1/3)
+              return player[this.layer].points.add(1).pow(1/4)
             }
         },
         14: {
@@ -263,7 +267,7 @@ addLayer("s", {
             cost:() => new Decimal(50),
             unl() { return (hasUpg(this.layer, 21))},
             effect() {
-                return player.points.add(1).pow(1/5)
+                return player.points.add(1).log(10).add(1)
             }
         },
         23: {
@@ -299,26 +303,80 @@ addLayer("so", {
         total: new Decimal(0),
     }},
     effect() {
+<<<<<<< Updated upstream
         let boostBase = 1.5
         return max(1,player["so"].points.times(boostBase))
     },
     effectDescription() {
         eff = this.effect;
+=======
+        eff = player[this.layer].points.add(1).sqrt()
+        if(player[this.layer].points.gte(1)) return eff;
+        return 1
+        },
+    effectDescription() {
+        eff = this.effect();
+>>>>>>> Stashed changes
         return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
     requires() {return new Decimal(200)}, 
     resource: "stars", 
+<<<<<<< Updated upstream
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
     type: "static", 
     exponent: 0.5, 
+=======
+    baseResource: "points", 
+    baseAmount() {return player.points},
+    type: "normal",
+    exponent: 0.5,
+>>>>>>> Stashed changes
     gainMult() {
         return new Decimal(1)
     },
     gainExp() {
         return new Decimal(1)
     },
+  buyables: {
+            rows: 1,
+            cols: 1,
+            respec() { // Optional, reset things and give back your currency. Having this function makes a respec button appear
+                player[this.layer].points = player[this.layer].points.add(player[this.layer].spentOnBuyables) // A built-in thing to keep track of this but only keeps a single value
+                resetBuyables(this.layer)
+                doReset(this.layer, true) // Force a reset
+            },
+            respecText:() => "Respec Stars", // Text on Respec button, optional
+            11: {
+                title:() => "Constellation 1", // Optional, displayed at the top in a larger font
+                cost(x) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                    let cost = Decimal.pow(2, x.pow(1.2))
+                    return cost.floor()
+                },
+                effect(x) { // Effects of owning x of the items, x is a decimal
+                    let eff = {}
+                    if (x.gte(0)) eff.first = Decimal.pow(5, x.pow(0.5))
+                    return eff;
+                },
+                display() { // Everything else displayed in the buyable button after the title
+                    let data = tmp.buyables[this.layer][this.id]
+                    return "Cost: " + format(data.cost) + " stars\n\
+                    Amount: " + player[this.layer].buyables[this.id] + "\n\
+                    Adds + " + format(data.effect.first) + " to the point generation base"
+                },
+                unl() { return player[this.layer].unl }, 
+                canAfford() {
+                    return player[this.layer].points.gte(tmp.buyables[this.layer][this.id].cost)},
+                buy() { 
+                    cost = tmp.buyables[this.layer][this.id].cost
+                    player[this.layer].points = player[this.layer].points.sub(cost)	
+                    player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                    player[this.layer].spentOnBuyables = player[this.layer].spentOnBuyables.add(cost) // This is a built-in system that you can use for respeccing but it only works with a single Decimal value
+                },
+                buyMax() {}, // You'll have to handle this yourself if you want
+            },
+        },
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 2]]
@@ -337,7 +395,7 @@ addLayer("c", {
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
     type: "normal", 
-    exponent: 0.5, 
+    exponent: .5,
     gainMult() {
         return new Decimal(1)
     },
@@ -357,19 +415,31 @@ addLayer("n", {
         total: new Decimal(0),
     }},
     effect() {
+<<<<<<< Updated upstream
         let boostBase = 1.5
         return max(1,player["n"].points.times(boostBase))
     },
     effectDescription() {
         eff = this.effect;
+=======
+        if(player[this.layer].points.gte(1)) return player[this.layer].points.add(1).sqrt()
+        return 1
+        },
+    effectDescription() {
+        eff = this.effect();
+>>>>>>> Stashed changes
         return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
-    requires() {return new Decimal(200)}, 
+    requires() {return new Decimal(50)}, 
     resource: "nebulae", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
+<<<<<<< Updated upstream
     type: "static", 
+=======
+    type: "normal",
+>>>>>>> Stashed changes
     exponent: 0.5, 
     gainMult() {
         return new Decimal(1)
@@ -377,6 +447,7 @@ addLayer("n", {
     gainExp() {
         return new Decimal(1)
     },
+
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 2]]
