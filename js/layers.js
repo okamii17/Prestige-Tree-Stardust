@@ -299,11 +299,11 @@ addLayer("so", {
         total: new Decimal(0),
     }},
     effect() {
-        let boostBase = 2
+        let boostBase = 1.5
         return max(1,player["so"].points.times(boostBase))
     },
     effectDescription() {
-        eff = this.effect();
+        eff = this.effect;
         return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
@@ -311,7 +311,7 @@ addLayer("so", {
     resource: "stars", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
-    type: "normal", 
+    type: "static", 
     exponent: 0.5, 
     gainMult() {
         return new Decimal(1)
@@ -332,7 +332,7 @@ addLayer("c", {
         total: new Decimal(0),
     }},
     color:() => "#8080b0",
-    requires() {return new Decimal(1000000)}, 
+    requires() {return new Decimal(100000000)}, 
     resource: "crystals", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
@@ -357,11 +357,11 @@ addLayer("n", {
         total: new Decimal(0),
     }},
     effect() {
-        let boostBase = 2
+        let boostBase = 1.5
         return max(1,player["n"].points.times(boostBase))
     },
     effectDescription() {
-        eff = this.effect();
+        eff = this.effect;
         return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
@@ -369,7 +369,7 @@ addLayer("n", {
     resource: "nebulae", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
-    type: "normal", 
+    type: "static", 
     exponent: 0.5, 
     gainMult() {
         return new Decimal(1)
