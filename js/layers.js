@@ -215,11 +215,7 @@ addLayer("s", {
         mult = new Decimal(1)
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
-<<<<<<< Updated upstream
-        if(player.so["points"].gte(1)) mult = mult.times(layers["so"].effect())
-=======
         mult = mult.times(layers["so"].effect("stardustBoost"))
->>>>>>> Stashed changes
         return mult
     },
     gainExp() {
@@ -303,36 +299,21 @@ addLayer("so", {
         total: new Decimal(0),
     }},
     effect() {
-<<<<<<< Updated upstream
-        let boostBase = 1.5
-        return max(1,player["so"].points.times(boostBase))
-    },
-    effectDescription() {
-        eff = this.effect;
-=======
         eff = player[this.layer].points.add(1).sqrt()
         if(player[this.layer].points.gte(1)) return eff;
-        return 1
+        return new Decimal(1)
         },
     effectDescription() {
         eff = this.effect();
->>>>>>> Stashed changes
         return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
     requires() {return new Decimal(200)}, 
     resource: "stars", 
-<<<<<<< Updated upstream
-    baseResource: "stardust", 
-    baseAmount() {return player.s.points},
-    type: "static", 
-    exponent: 0.5, 
-=======
     baseResource: "points", 
     baseAmount() {return player.points},
     type: "normal",
     exponent: 0.5,
->>>>>>> Stashed changes
     gainMult() {
         return new Decimal(1)
     },
@@ -390,7 +371,7 @@ addLayer("c", {
         total: new Decimal(0),
     }},
     color:() => "#8080b0",
-    requires() {return new Decimal(100000000)}, 
+    requires() {return new Decimal(1000000)}, 
     resource: "crystals", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
@@ -410,24 +391,16 @@ addLayer("c", {
 addLayer("n", {
     startData() { return {
         unl: false,
-              points: new Decimal(0),
+        points: new Decimal(0),
         best: new Decimal(0),
         total: new Decimal(0),
     }},
     effect() {
-<<<<<<< Updated upstream
-        let boostBase = 1.5
-        return max(1,player["n"].points.times(boostBase))
-    },
-    effectDescription() {
-        eff = this.effect;
-=======
         if(player[this.layer].points.gte(1)) return player[this.layer].points.add(1).sqrt()
         return 1
         },
     effectDescription() {
         eff = this.effect();
->>>>>>> Stashed changes
         return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
@@ -435,11 +408,7 @@ addLayer("n", {
     resource: "nebulae", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
-<<<<<<< Updated upstream
-    type: "static", 
-=======
     type: "normal",
->>>>>>> Stashed changes
     exponent: 0.5, 
     gainMult() {
         return new Decimal(1)
