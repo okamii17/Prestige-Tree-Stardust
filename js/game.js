@@ -5,8 +5,8 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
-	num: "Alpha 3",
-	name: "There's nothing here."
+	num: "Alpha 4",
+	name: "The void glows dimly."
 }
 
 function startPlayerBase() {
@@ -44,11 +44,13 @@ function getPointGen() {
 	// base gen
 	let gain = new Decimal(1)
 	if (hasUpg("s", 12)) gain = gain.add(2)
-  gain = gain.add(tmp.buyables["so"][11].effect)
+  gain = gain.add(tmp.buyables["so"][11].effect["first"])
 	if (hasUpg("s", 21)) gain = gain.times(2)
     // multipliers
 	if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
 	gain = gain.times(layers["n"].effect())
+  gain = gain.mul(tmp.buyables["n"][11].effect["first"])
+  gain = gain.div(tmp.buyables["n"][13].effect["first"])
 	return gain
 }
 
