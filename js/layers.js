@@ -360,6 +360,41 @@ addLayer("so", {
                 },
             },
         },
+        upgrades: {
+            rows: 1,
+            cols: 4,
+            11: {
+                title:() => "Placeholder name.",
+                desc:() => "Stars also buff points at a reduced rate.",
+                cost:() => new Decimal(5),
+                unl() { return player[this.layer].unl }, 
+                effect() {
+                    eff = player[this.layer].points.add(9).pow(1/3)
+                    return eff
+                  }
+            },
+            12: {
+                title:() => "Glow.",
+                desc:() => "Dark nebulae nerf is slightly decreased.",
+                cost:() => new Decimal(25),
+                unl() { return false},
+            },
+            13: {
+                title:() => "Accrete.",
+                desc:() => "Increase stardust generation based on unspent stars.",
+                cost:() => new Decimal(100),
+                unl() { return (hasUpg(this.layer, 12))},
+                effect() {
+                  return player[this.layer].points.add(1).pow(1/3)
+                }
+            },
+            14: {
+                title:() => "Simplify.",
+                desc:() => "Keep the first eight stardust upgrades on a row 2 reset.",
+                cost:() => new Decimal(250),
+                unl() { return (hasUpg(this.layer, 13))},
+            },
+        },
         hotkeys: [
             {key: "S", 
             desc: "Shift-s: reset your stardust for stars",
@@ -378,7 +413,7 @@ addLayer("c", {
         total: new Decimal(0),
     }},
     color:() => "#8080b0",
-    requires() {return new Decimal("1e65536")}, 
+    requires() {return new Decimal("1e6")}, 
     resource: "crystals", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
@@ -495,7 +530,9 @@ addLayer("n", {
                 },
                 effect(x) { // Effects of owning x of the items, x is a decimal
                     let eff = {}
-                    if (x.gte(0)) eff.first = Decimal.pow(2, x.pow(0.5))
+                    if (x.gte(0)) {
+                        eff.first = Decimal.pow(2, x.pow(0.5))
+                    }
                     if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.5))
                     return eff;
                 },

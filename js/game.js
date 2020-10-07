@@ -5,8 +5,8 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
-	num: "Alpha 4",
-	name: "The void glows dimly."
+	num: "Alpha 5",
+	name: "The void stops glowing."
 }
 
 function startPlayerBase() {
@@ -51,6 +51,7 @@ function getPointGen() {
 	gain = gain.times(layers["so"].effect())
   gain = gain.mul(tmp.buyables["n"][11].effect["first"])
   gain = gain.div(tmp.buyables["n"][13].effect["first"])
+	if(hasUpg("so",11)) gain = gain.times(layers["so"].upgrades[11].effect())
 
 	return gain
 }
