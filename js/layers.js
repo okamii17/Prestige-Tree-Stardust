@@ -367,7 +367,7 @@ addLayer("so", {
         ],
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
-    branches: [["s", 2]]
+    branches: [["s", 5]]
 }, 
 )
 addLayer("c", {
@@ -550,6 +550,6 @@ addLayer("n", {
         ],
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
-    branches: [["s", 2]]
+    branches: [["s", 6]]
 }, 
 )
