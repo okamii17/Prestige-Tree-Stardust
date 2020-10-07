@@ -378,7 +378,7 @@ addLayer("c", {
         total: new Decimal(0),
     }},
     color:() => "#8080b0",
-    requires() {return new Decimal(1000000)}, 
+    requires() {return new Decimal("1e65536")}, 
     resource: "crystals", 
     baseResource: "stardust", 
     baseAmount() {return player.s.points},
@@ -390,7 +390,7 @@ addLayer("c", {
     gainExp() {
         return new Decimal(1)
     },
-    row: 0,
+    row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 4]]
 }, 
