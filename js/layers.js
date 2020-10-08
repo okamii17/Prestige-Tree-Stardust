@@ -216,7 +216,7 @@ addLayer("s", {
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
         if(hasUpg("n",11)) mult = mult.times(layers["n"].upgrades[11].effect())
-        mult = mult.times(layers["so"].effect("stardustBoost"))
+        mult = mult.times(layers["so"].effect())
         mult = mult.times(buyableEffect("n",13)["second"])
         return mult
     },
@@ -312,7 +312,7 @@ addLayer("so", {
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting point gain by "+format(eff)+"."
+        return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
     requires() {return new Decimal(200)}, 
@@ -452,7 +452,7 @@ addLayer("n", {
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting stardust gain by "+format(eff)+"."
+        return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
     requires() {return new Decimal(50)}, 
@@ -491,7 +491,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Further multiply point gain by " + format(data.effect.first) + "x"
                 },
@@ -522,7 +522,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Divides nebula gain by " + format(data.effect.first) + "x and multiplies point gain by " + format(data.effect.second) + "x"
                 },
@@ -554,7 +554,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Divides star and point gain by " + format(data.effect.first) + "x and multiplies stardust gain by " + format(data.effect.second) + "x"
                 },
@@ -581,7 +581,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Multiplies contellation effects by " + format(data.effect.first) + "x"
                 },
