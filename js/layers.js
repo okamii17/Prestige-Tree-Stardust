@@ -404,8 +404,6 @@ addLayer("so", {
                 unl() { return (hasUpg(this.layer, 11))},
             },
         },
-            },
-        },
         hotkeys: [
             {key: "S", 
             desc: "Shift-s: reset your stardust for stars",
