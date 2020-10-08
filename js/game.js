@@ -5,7 +5,7 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
-	num: "Alpha 5",
+	num: "Alpha 6",
 	name: "The void glows dimly."
 }
 
@@ -21,7 +21,6 @@ function getPointGen() {
 	if (hasUpg("s", 12)) gain = gain.add(2)
     if(player.so.unl) gain = gain.add(buyableEffect("so",11)["first"])
 	if (hasUpg("s", 21)) gain = gain.times(2)
-	if (hasUpg("s", 23)) if(player.points.lte(500)) gain = gain.times(10)
     // multipliers
 	if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
 	gain = gain.times(layers["n"].effect())
@@ -315,9 +314,11 @@ function buyUpg(layer, id) {
 function buyBuyable(layer, id) {
 	if (!player[layer].unl) return
 	if (!tmp.buyables[layer][id].unl) return
+	updateBuyableTemp(this.layer)
 	if (!tmp.buyables[layer][id].canAfford) return
 
 	layers[layer].buyables[id].buy()
+	updateBuyableTemp(this.layer)
 }
 
 function resetRow(row) {
