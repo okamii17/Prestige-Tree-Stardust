@@ -45,6 +45,11 @@
 		</div>
 		<div v-if="player.tab=='changelog'" class="col right">
 			<button class="back" onclick="showTab('tree')">←</button><br>
+			<h3>Alpha 5: the void glows ever brighter</h3>
+			<ul>
+				<li>bug fixes, added more content in all three layers</li>
+				<li>balanced to e11 points, e12 stardust</li>
+			</ul><br>
 			<h3>Alpha 4: the void is filling up with light</h3>
 			<ul>
 				<li>Added nebulae and constellations.</li>
@@ -122,7 +127,9 @@
 			<span v-if="player.points.lt('1e1000')">You have </span>
 			<h2 id="points">{{format(player.points)}}</h2>
 			<span v-if="player.points.lt('1e1e6')"> {{modInfo.pointsName}}</span>
-			<br><br><br><br><br>
+			<br>
+			<span v-if="showPointGen()">({{format(getPointGen())}}/sec)</span>
+			<br><br><br><br>
 			<!-- *************************** Modify the tree in the table below! *************************** -->
 			<table>
 				<td><layer-node layer="s" abb="S"></layer-node></td>
