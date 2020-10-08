@@ -19,7 +19,7 @@ function getPointGen() {
 	// base gen
 	let gain = new Decimal(1)
 	if (hasUpg("s", 12)) gain = gain.add(2)
-    gain = gain.add(buyableEffect("so",11)["first"])
+    if(layers.so.unl) gain = gain.add(buyableEffect("so",11)["first"])
 	if (hasUpg("s", 21)) gain = gain.times(2)
 	if (hasUpg("s", 23)) if(player.points.lte(500)) gain = gain.times(10)
     // multipliers
