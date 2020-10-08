@@ -312,7 +312,7 @@ addLayer("so", {
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting stardust gain by "+format(eff)+"."
+        return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
     requires() {return new Decimal(200)}, 
@@ -404,6 +404,13 @@ addLayer("so", {
                 unl() { return (hasUpg(this.layer, 11))},
             },
         },
+            },
+        },
+        hotkeys: [
+            {key: "S", 
+            desc: "Shift-s: reset your stardust for stars",
+            onPress(){if (player.so.unl) doReset("so")}},
+        ],
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 5]]
@@ -447,7 +454,7 @@ addLayer("n", {
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting point gain by "+format(eff)+"."
+        return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
     requires() {return new Decimal(50)}, 
@@ -544,7 +551,6 @@ addLayer("n", {
                         if(hasUpg("so",12) && eff.first.gt(1)) eff.first = eff.first.div(1.5)
                         if(hasUpg("n",13) && eff.first.gt(1)) eff.first = eff.first.div(layers["n"].upgrades[13].effect())
                     }
-
                     if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.5))
                     return eff;
                 },
@@ -630,6 +636,11 @@ addLayer("n", {
         update(diff) {
             if (hasUpg("n",14)) generatePoints("s", diff)
           },
+        hotkeys: [
+            {key: "n", 
+            desc: "n: reset your stardust for nebulas",
+            onPress(){if (player.n.unl) doReset("n")}},
+        ],
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 6]]

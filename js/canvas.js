@@ -38,6 +38,7 @@ var colors = {
 		4: "#8080b0",
 		5: "#fadb6b",
 		6: "#6541d1",
+
 	},
 }
 var colors_theme
