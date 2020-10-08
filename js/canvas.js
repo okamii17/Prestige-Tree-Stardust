@@ -28,12 +28,16 @@ var colors = {
 		2: "#bfbfbf",
 		3: "#7f7f7f",
 		4: "#8080b0",
+		5: "#fadb6b",
+		6: "#6541d1",
 	},
 	aqua: {
 		1: "#bfdfff",
 		2: "#8fa7bf",
 		3: "#5f6f7f",
 		4: "#8080b0",
+		5: "#fadb6b",
+		6: "#6541d1",
 	},
 }
 var colors_theme

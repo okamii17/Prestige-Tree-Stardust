@@ -284,7 +284,7 @@ addLayer("s", {
     doReset(resettingLayer){ // Triggers when this layer is being reset, along with the layer doing the resetting. Not triggered by lower layers resetting, but is by layers on the same row.
         if(layers[resettingLayer].row > this.row) {
         fullLayerReset(this.layer)
-        if(hasUpg("so",14)) player.s.upgrades = [11,12,13,14,21,22,23,24]
+        if(hasUpg("so",14)) player.s.upgrades = [11,12,13,14,21,22,23]
         }
     },
     hotkeys: [
@@ -399,14 +399,14 @@ addLayer("so", {
             },
             14: {
                 title:() => "Simplify.",
-                desc:() => "Keep the first eight stardust upgrades on a row 2 reset.",
+                desc:() => "Keep the first seven stardust upgrades on a row 2 reset.",
                 cost:() => new Decimal(50),
                 unl() { return (hasUpg(this.layer, 11))},
             },
         },
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
-    branches: [["s", 2]]
+    branches: [["s", 5]]
 }, 
 )
 addLayer("c", {
@@ -632,6 +632,6 @@ addLayer("n", {
           },
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
-    branches: [["s", 2]]
+    branches: [["s", 6]]
 }, 
 )
