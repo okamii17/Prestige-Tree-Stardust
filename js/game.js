@@ -5,13 +5,8 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
-<<<<<<< Updated upstream
-	num: "Alpha 5",
-	name: "The void glows dimly."
-=======
 	num: "Alpha 7",
 	name: "How can something so enticing..."
->>>>>>> Stashed changes
 }
 
 // Determines if it should show points/sec
@@ -24,11 +19,7 @@ function getPointGen() {
 	// base gen
 	let gain = new Decimal(1)
 	if (hasUpg("s", 12)) gain = gain.add(2)
-<<<<<<< Updated upstream
-    gain = gain.add(buyableEffect("so",11)["first"])
-=======
     if(player.so.buyables[11].gte(1)) gain = gain.add(buyableEffect("so",11)["first"])
->>>>>>> Stashed changes
 	if (hasUpg("s", 21)) gain = gain.times(2)
 	if (hasUpg("s", 23)) if(player.points.lte(500)) gain = gain.times(10)
     // multipliers
@@ -338,10 +329,7 @@ function buyBuyable(layer, id) {
 	if (!tmp.buyables[layer][id].canAfford) return
 
 	layers[layer].buyables[id].buy()
-<<<<<<< Updated upstream
-=======
 	updateBuyableTemp(layer)
->>>>>>> Stashed changes
 }
 
 function resetRow(row) {

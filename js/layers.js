@@ -216,13 +216,8 @@ addLayer("s", {
         if(hasUpg(this.layer, 14)) mult = mult.times(3)
         if(hasUpg(this.layer, 22)) mult = mult.times(layers["s"].upgrades[22].effect())
         if(hasUpg("n",11)) mult = mult.times(layers["n"].upgrades[11].effect())
-<<<<<<< Updated upstream
-        mult = mult.times(layers["so"].effect("stardustBoost"))
-        mult = mult.times(buyableEffect("n",13)["second"])
-=======
         if(player.so.unl) mult = mult.times(layers["so"].effect())
         if(player.n.buyables[13].gte(1)) mult = mult.times(buyableEffect("n",13)["second"])
->>>>>>> Stashed changes
         return mult
     },
     gainExp() {
@@ -241,21 +236,13 @@ addLayer("s", {
             title:() => "Amplify.",
             desc:() => "Add 2 to the point generation base.",
             cost:() => new Decimal(2),
-<<<<<<< Updated upstream
-            unl() { return (hasUpg(this.layer, 11)) || player.so.unl || player.n.unl},
-=======
             unl() { return (hasUpg(this.layer, 11) || ((player.so.unl || player.n.unl) && hasUpg(this.layer, 11)))},
->>>>>>> Stashed changes
         },
         13: {
             title:() => "Expand space.",
             desc:() => "Increase point generation based on unspent stardust.",
             cost:() => new Decimal(2),
-<<<<<<< Updated upstream
-            unl() { return (hasUpg(this.layer, 12)) || player.so.unl || player.n.unl},
-=======
             unl() { return (hasUpg(this.layer, 12) || ((player.so.unl || player.n.unl) && hasUpg(this.layer, 11)))},
->>>>>>> Stashed changes
             effect() {
               return player[this.layer].points.add(9).pow(1/3)
             }
@@ -264,48 +251,25 @@ addLayer("s", {
             title:() => "Extend reach.",
             desc:() => "Stardust gain is tripled.",
             cost:() => new Decimal(10),
-<<<<<<< Updated upstream
-            unl() { return (hasUpg(this.layer, 13)) || player.so.unl || player.n.unl},
-=======
             unl() { return (hasUpg(this.layer, 13) || ((player.so.unl || player.n.unl) && hasUpg(this.layer, 11)))},
->>>>>>> Stashed changes
         },
         21: {
             title:() => "Magnify.",
             desc:() => "Double the point generation base.",
             cost:() => new Decimal(25),
-<<<<<<< Updated upstream
-            unl() { return (hasUpg(this.layer, 14)) || player.so.unl || player.n.unl},
-=======
             unl() { return (hasUpg(this.layer, 14) || ((player.so.unl || player.n.unl) && hasUpg(this.layer, 11)))},
->>>>>>> Stashed changes
         },
         22: {
             title:() => "Placeholder title.",
             desc:() => "Points further increase stardust gain.",
             cost:() => new Decimal(50),
-<<<<<<< Updated upstream
-            unl() { return (hasUpg(this.layer, 21)) || player.so.unl || player.n.unl},
-=======
             unl() { return (hasUpg(this.layer, 21) || ((player.so.unl || player.n.unl) && hasUpg(this.layer, 11)))},
->>>>>>> Stashed changes
             effect() {
                 return player.points.add(1).log(10).add(1)
             }
         },
         23: {
             title:() => "Placeholder title.",
-<<<<<<< Updated upstream
-            desc:() => "Point generation gains a temporary 10x boost until 500 points.",
-            cost:() => new Decimal(100),
-            unl() { return (hasUpg(this.layer, 22)) || player.so.unl || player.n.unl},
-        },
-        24: {
-            title:() => "Placeholder title.",
-            desc:() => "Unlock more upgrades in the sol and nebulae layers. (not implemented yet)",
-            cost:() => new Decimal(1e12),
-            unl() { return (hasUpg(this.layer, 23)) || player.so.unl || player.n.unl},
-=======
             desc:() => "okay you *really* shouldnt be looking here.",
             cost:() => new Decimal(10000),
             unl() { return false},
@@ -319,7 +283,6 @@ addLayer("s", {
                 player.so.extend = true
                 player.n.extend = true
             }
->>>>>>> Stashed changes
         },
     },
     doReset(resettingLayer){ // Triggers when this layer is being reset, along with the layer doing the resetting. Not triggered by lower layers resetting, but is by layers on the same row.
@@ -466,13 +429,8 @@ addLayer("so", {
             },
             12: {
                 title:() => "Glow.",
-<<<<<<< Updated upstream
-                desc:() => "Dark nebulae nerf is slightly decreased.",
-                cost:() => new Decimal(10),
-=======
                 desc:() => "Dark nebulae nerf is divided slightly.",
                 cost:() => new Decimal(20),
->>>>>>> Stashed changes
                 unl() { return (hasUpg(this.layer, 11))},
             },
             13: {
@@ -486,13 +444,8 @@ addLayer("so", {
             },
             14: {
                 title:() => "Simplify.",
-<<<<<<< Updated upstream
-                desc:() => "Keep the first seven stardust upgrades on a row 2 reset.",
-                cost:() => new Decimal(50),
-=======
                 desc:() => "Keep the first six stardust upgrades on a row 2 reset.",
                 cost:() => new Decimal(350),
->>>>>>> Stashed changes
                 unl() { return (hasUpg(this.layer, 11))},
             },
             21: {
@@ -532,8 +485,6 @@ addLayer("so", {
                 }
             },
         },
-            },
-        },
         hotkeys: [
             {key: "S", 
             desc: "Shift-s: reset your stardust for stars",
@@ -555,14 +506,6 @@ addLayer("c", {
         total: new Decimal(0),
     }},
     color:() => "#8080b0",
-<<<<<<< Updated upstream
-    requires() {return new Decimal("1e30")}, 
-    resource: "crystals", 
-    baseResource: "stardust", 
-    baseAmount() {return player.s.points},
-    type: "normal", 
-    exponent: .5,
-=======
     requires() {return new Decimal("1e55")}, 
     resource: "crystals", 
     baseResource: "stardust", 
@@ -570,7 +513,6 @@ addLayer("c", {
     type: "static", 
     base: 12,
     exponent: 3,
->>>>>>> Stashed changes
     gainMult() {
         return new Decimal(1)
     },
@@ -579,9 +521,6 @@ addLayer("c", {
     },
     row: 1,
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
-<<<<<<< Updated upstream
-    branches: [["s", 4]]
-=======
     branches: [["s", 4]],
     canBuyMax() {
         return false
@@ -589,7 +528,6 @@ addLayer("c", {
     style() {return {
         'background-color': '#101020' 
     }},
->>>>>>> Stashed changes
 }, 
 )
 addLayer("n", {
@@ -676,12 +614,8 @@ addLayer("n", {
                         if(hasUpg("so",22) && eff.first.gt(1)) eff.first = eff.first.div(1.66)
                         if(hasUpg("n",13) && eff.first.gt(1)) eff.first = eff.first.div(layers["n"].upgrades[13].effect())
                     }
-<<<<<<< Updated upstream
-                    if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.5))
-=======
                     if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.33))
                     if(hasUpg("n",22)) eff.second = eff.second.times(upgEffect("n",22))
->>>>>>> Stashed changes
                     return eff;
                 },
                 display() { // Everything else displayed in the buyable button after the title
@@ -710,22 +644,13 @@ addLayer("n", {
                 effect(x) { // Effects of owning x of the items, x is a decimal
                     let eff = {}
                     if (x.gte(0)) {
-<<<<<<< Updated upstream
-                        eff.first = Decimal.pow(2, x.pow(0.5))
-                        if(hasUpg("so",12) && eff.first.gt(1)) eff.first = eff.first.div(1.5)
-=======
                         eff.first = Decimal.pow(2, x.pow(0.9))
                         if(hasUpg("so",12) && eff.first.gt(1)) eff.first = eff.first.div(1.33)
                         if(hasUpg("so",22) && eff.first.gt(1)) eff.first = eff.first.div(1.248)
->>>>>>> Stashed changes
                         if(hasUpg("n",13) && eff.first.gt(1)) eff.first = eff.first.div(layers["n"].upgrades[13].effect())
                     }
-<<<<<<< Updated upstream
-                    if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.5))
-=======
                     if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.33))
                     if(hasUpg("n",22)) eff.second = eff.second.times(upgEffect("n",22))
->>>>>>> Stashed changes
                     return eff;
                 },
                 display() { // Everything else displayed in the buyable button after the title
@@ -753,12 +678,8 @@ addLayer("n", {
                 },
                 effect(x) { // Effects of owning x of the items, x is a decimal
                     let eff = {}
-<<<<<<< Updated upstream
-                    if (x.gte(0)) eff.first = Decimal.pow(2, x.pow(0.5))
-=======
                     if (x.gte(0)) eff.first = Decimal.pow(2, x.pow(0.35))
                     if(hasUpg("n",22)) eff.first = eff.first.times(upgEffect("n",22))
->>>>>>> Stashed changes
                     return eff;
                 },
                 display() { // Everything else displayed in the buyable button after the title
@@ -798,21 +719,12 @@ addLayer("n", {
                 unl() { return (hasUpg(this.layer, 11))},
             },
             13: {
-<<<<<<< Updated upstream
-                title:() => "Placeholder name.",
-                desc:() => "Nebulae nerfs are reduced by unspent nebulae.",
-                cost:() => new Decimal(20),
-                unl() { return (hasUpg(this.layer, 12))},
-                effect() {
-                  return player[this.layer].points.add(1).pow(1/5)
-=======
                 title:() => "Subdue.",
                 desc:() => "Nebulae nerfs are reduced by unspent nebulae, hardcapped at /1.",
                 cost:() => new Decimal(40),
                 unl() { return (hasUpg(this.layer, 12))},
                 effect() {
                   return player[this.layer].points.add(5).pow(1/6)
->>>>>>> Stashed changes
                 }
             },
             14: {
