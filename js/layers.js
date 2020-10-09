@@ -614,6 +614,7 @@ addLayer("n", {
                         if(hasUpg("so",22) && eff.first.gt(1)) eff.first = eff.first.div(1.66)
                         if(hasUpg("n",13) && eff.first.gt(1)) eff.first = eff.first.div(layers["n"].upgrades[13].effect())
                     }
+                    if(!hasUpg("c",14) && eff.first.lt(1)) eff.first = new Decimal (1)
                     if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.33))
                     if(hasUpg("n",22)) eff.second = eff.second.times(upgEffect("n",22))
                     return eff;
@@ -649,6 +650,7 @@ addLayer("n", {
                         if(hasUpg("so",22) && eff.first.gt(1)) eff.first = eff.first.div(1.248)
                         if(hasUpg("n",13) && eff.first.gt(1)) eff.first = eff.first.div(layers["n"].upgrades[13].effect())
                     }
+                    if(!hasUpg("c",14) && eff.first.lt(1)) eff.first = new Decimal (1)
                     if (x.gte(0)) eff.second = Decimal.pow(3, x.pow(0.33))
                     if(hasUpg("n",22)) eff.second = eff.second.times(upgEffect("n",22))
                     return eff;
