@@ -218,7 +218,7 @@ addLayer("s", {
         if(hasUpg("n",11)) mult = mult.times(layers["n"].upgrades[11].effect())
         if(player.so.unl) mult = mult.times(layers["so"].effect())
         if(player.n.buyables[13].gte(1)) mult = mult.times(buyableEffect("n",13)["second"])
-        return mult
+        return mult.max(1)
     },
     gainExp() {
         return new Decimal(1)
@@ -265,7 +265,7 @@ addLayer("s", {
             cost:() => new Decimal(50),
             unl() { return (hasUpg(this.layer, 21) || ((player.so.unl || player.n.unl) && hasUpg(this.layer, 11)))},
             effect() {
-                return player.points.add(1).log(10).add(1)
+                return player.points.add(10).log(10).add(1)
             }
         },
         23: {
@@ -315,7 +315,7 @@ addLayer("so", {
         extend: false,
     }},
     effect() {
-        eff = player[this.layer].points.add(1).sqrt()
+        eff = player[this.layer].points.add(1).sqrt().add(1)
         if(player.so.buyables[12].gte(1)) eff = eff.mul(buyableEffect("so",12)["first"])
         return eff
         },
@@ -360,7 +360,7 @@ addLayer("so", {
                     let eff = {}
                     if (x.gte(0)) {
                         eff.first = Decimal.pow(3, x.pow(0.3))
-                        if(player.n.buyables[14].gte(1))eff.first = eff.first.times(buyableEffect("n",14)["first"])
+                        if(player.n.buyables[14].gte(1)) eff.first = eff.first.times(buyableEffect("n",14)["first"]).max(1)
                         if(hasUpg("so",24)) eff.first = eff.first.times(upgEffect("so",24))
                     }
                     return eff;
@@ -390,12 +390,13 @@ addLayer("so", {
                 },
                 effect(x) { // Effects of owning x of the items, x is a decimal
                     let eff = {}
+                    eff.first = new Decimal ("1")
                     if (x.gte(0)) {
                         eff.first = Decimal.pow(3, x.pow(0.22))
                         if(player.n.buyables[14].gte(1)) eff.first = eff.first.times(buyableEffect("n",14)["first"])
                         if(hasUpg("so",24)) eff.first = eff.first.times(upgEffect("so",24))
-                        return eff
                     }
+                    return eff
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
@@ -454,7 +455,7 @@ addLayer("so", {
                 cost:() => new Decimal(1e6),
                 unl() { return player.so.extend }, 
                 effect() {
-                    eff = player.s.points.add(100).log(7).div(2)
+                    eff = player.s.points.add(100).log(7).div(2).add(1)
                     return eff
                   }
             },
@@ -470,7 +471,7 @@ addLayer("so", {
                 cost:() => new Decimal(1e8),
                 unl() { return player.so.extend },
                 effect() {
-                    eff = player.s.points.add(100).pow(1/8)
+                    eff = player.s.points.add(100).pow(1/8).add(1)
                     return eff
                 }
             },
@@ -480,7 +481,7 @@ addLayer("so", {
                 cost:() => new Decimal(1e18),
                 unl() { return player.so.extend },
                 effect() {
-                    eff = player.so.points.add(100).log(9)
+                    eff = player.so.points.add(100).log(9).add(1)
                     return eff
                 }
             },
@@ -680,9 +681,10 @@ addLayer("n", {
                 },
                 effect(x) { // Effects of owning x of the items, x is a decimal
                     let eff = {}
+                    eff.first = new Decimal ("1")
                     if (x.gte(0)) eff.first = Decimal.pow(2, x.pow(0.35))
                     if(hasUpg("n",22)) eff.first = eff.first.times(upgEffect("n",22))
-                    return eff;
+                    return eff
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
@@ -726,7 +728,7 @@ addLayer("n", {
                 cost:() => new Decimal(40),
                 unl() { return (hasUpg(this.layer, 12))},
                 effect() {
-                  return player[this.layer].points.add(5).pow(1/6)
+                  return player[this.layer].points.add(5).pow(1/6).add(1)
                 }
             },
             14: {
