@@ -5,8 +5,13 @@ var NaNalert = false;
 var gameEnded = false;
 
 let VERSION = {
+<<<<<<< Updated upstream
 	num: "Alpha 5",
 	name: "The void glows dimly."
+=======
+	num: "Alpha 7",
+	name: "How can something so enticing..."
+>>>>>>> Stashed changes
 }
 
 // Determines if it should show points/sec
@@ -19,15 +24,19 @@ function getPointGen() {
 	// base gen
 	let gain = new Decimal(1)
 	if (hasUpg("s", 12)) gain = gain.add(2)
+<<<<<<< Updated upstream
     gain = gain.add(buyableEffect("so",11)["first"])
+=======
+    if(player.so.buyables[11].gte(1)) gain = gain.add(buyableEffect("so",11)["first"])
+>>>>>>> Stashed changes
 	if (hasUpg("s", 21)) gain = gain.times(2)
 	if (hasUpg("s", 23)) if(player.points.lte(500)) gain = gain.times(10)
     // multipliers
 	if (hasUpg("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
-	gain = gain.times(layers["n"].effect())
-  gain = gain.mul(buyableEffect("n",11)["first"])
-  gain = gain.mul(buyableEffect("n",12)["second"])
-  gain = gain.div(buyableEffect("n",13)["first"])
+	if(player.n.unl) gain = gain.times(layers["n"].effect())
+	if(player.n.buyables[11].gte(1)) gain = gain.mul(buyableEffect("n",11)["first"])
+	if(player.n.buyables[12].gte(1)) gain = gain.mul(buyableEffect("n",12)["second"])
+	if(player.n.buyables[13].gte(1)) gain = gain.div(buyableEffect("n",13)["first"])
 	return gain
 }
 
@@ -236,6 +245,7 @@ function respecBuyables(layer) {
 	if (!layers[layer].buyables.respec) return
 	if (!confirm("Are you sure you want to respec? This will force you to do a \"" + (layers[layer].name ? layers[layer].name : layer) + "\" reset as well!")) return
 	layers[layer].buyables.respec()
+	updateBuyableTemp(layer)
 }
 
 function canAffordUpg(layer, id) {
@@ -312,12 +322,26 @@ function buyUpg(layer, id) {
 		upg.onPurchase()
 }
 
+function buyMaxBuyable(layer, id) {
+	if (!player[layer].unl) return
+	if (!tmp.buyables[layer][id].unl) return
+	if (!tmp.buyables[layer][id].canAfford) return
+	if (!layers[layer].buyables[id].buyMax) return
+
+	layers[layer].buyables[id].buyMax()
+	updateBuyableTemp(layer)
+}
+
 function buyBuyable(layer, id) {
 	if (!player[layer].unl) return
 	if (!tmp.buyables[layer][id].unl) return
 	if (!tmp.buyables[layer][id].canAfford) return
 
 	layers[layer].buyables[id].buy()
+<<<<<<< Updated upstream
+=======
+	updateBuyableTemp(layer)
+>>>>>>> Stashed changes
 }
 
 function resetRow(row) {
