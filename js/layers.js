@@ -587,7 +587,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Further multiply point gain by " + format(data.effect.first) + "x"
                 },
@@ -622,7 +622,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Divides nebula gain by " + format(data.effect.first) + "x and multiplies point gain by " + format(data.effect.second) + "x"
                 },
@@ -658,7 +658,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Divides star and point gain by " + format(data.effect.first) + "x and multiplies stardust gain by " + format(data.effect.second) + "x"
                 },
@@ -688,7 +688,7 @@ addLayer("n", {
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
-                    return "Cost: " + format(data.cost) + " stars\n\
+                    return "Cost: " + format(data.cost) + " nebulae\n\
                     Amount: " + player[this.layer].buyables[this.id] + "\n\
                     Multiplies constellation effects by " + format(data.effect.first) + "x"
                 },
@@ -728,7 +728,7 @@ addLayer("n", {
                 cost:() => new Decimal(40),
                 unl() { return (hasUpg(this.layer, 12))},
                 effect() {
-                  return player[this.layer].points.add(5).pow(1/6).add(1)
+                  return player[this.layer].points.add(5).log(3).add(1)
                 }
             },
             14: {
