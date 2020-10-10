@@ -315,13 +315,13 @@ addLayer("so", {
         extend: false,
     }},
     effect() {
-        eff = player[this.layer].points.add(1).sqrt().add(1)
+        eff = player[this.layer].points.add(1).sqrt()
         if(player.so.buyables[12].gte(1)) eff = eff.mul(buyableEffect("so",12)["first"])
         return eff
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting point gain by "+format(eff)+"."
+        return "which are boosting stardust gain by "+format(eff)+"."
     },
     color:() => "#fadb6b",
     requires() {return new Decimal(200)}, 
@@ -437,7 +437,7 @@ addLayer("so", {
             13: {
                 title:() => "Accrete.",
                 desc:() => "Increase stardust generation based on unspent stars.",
-                cost:() => new Decimal(5),
+                cost:() => new Decimal(60),
                 unl() { return (hasUpg(this.layer, 11))},
                 effect() {
                   return player[this.layer].points.add(1).pow(1/3)
@@ -452,7 +452,7 @@ addLayer("so", {
             21: {
                 title:() => "Placeholder name.",
                 desc:() => "Stardust boosts star gain.",
-                cost:() => new Decimal(1e6),
+                cost:() => new Decimal(5e5),
                 unl() { return player.so.extend }, 
                 effect() {
                     eff = player.s.points.add(100).log(7).div(2).add(1)
@@ -462,7 +462,7 @@ addLayer("so", {
             22: {
                 title:() => "Placeholder name.",
                 desc:() => "Star upgrade 2 applies to Reflection Nebulae as well, and is buffed to 1.66.",
-                cost:() => new Decimal(1e8),
+                cost:() => new Decimal(1e7),
                 unl() { return player.so.extend },
             },
             23: {
@@ -478,7 +478,7 @@ addLayer("so", {
             24: {
                 title:() => "Placeholder name.",
                 desc:() => "Stars buff constellation effects.",
-                cost:() => new Decimal(1e18),
+                cost:() => new Decimal(1e17),
                 unl() { return player.so.extend },
                 effect() {
                     eff = player.so.points.add(100).log(9).add(1)
@@ -545,7 +545,7 @@ addLayer("n", {
         },
     effectDescription() {
         eff = this.effect();
-        return "which are boosting stardust gain by "+format(eff)+"."
+        return "which are boosting point gain by "+format(eff)+"."
     },
     color:() => "#6541d1",
     requires() {return new Decimal(200)}, 
@@ -681,10 +681,9 @@ addLayer("n", {
                 },
                 effect(x) { // Effects of owning x of the items, x is a decimal
                     let eff = {}
-                    eff.first = new Decimal ("1")
-                    if (x.gte(0)) eff.first = Decimal.pow(2, x.pow(0.35))
+                    if (x.gte(0)) eff.first = Decimal.pow(2, x.pow(0.35)).max(1)
                     if(hasUpg("n",22)) eff.first = eff.first.times(upgEffect("n",22))
-                    return eff
+                    return eff;
                 },
                 display() { // Everything else displayed in the buyable button after the title
                     let data = tmp.buyables[this.layer][this.id]
@@ -709,7 +708,7 @@ addLayer("n", {
             11: {
                 title:() => "Placeholder name.",
                 desc:() => "Unspent nebulae buff stardust at a reduced rate.",
-                cost:() => new Decimal(3),
+                cost:() => new Decimal(1),
                 unl() { return player[this.layer].unl }, 
                 effect() {
                     eff = player[this.layer].points.add(8).pow(1/3)
@@ -725,7 +724,7 @@ addLayer("n", {
             13: {
                 title:() => "Subdue.",
                 desc:() => "Nebulae nerfs are reduced by unspent nebulae, hardcapped at /1.",
-                cost:() => new Decimal(40),
+                cost:() => new Decimal(20),
                 unl() { return (hasUpg(this.layer, 12))},
                 effect() {
                   return player[this.layer].points.add(5).log(3).add(1)
@@ -734,7 +733,7 @@ addLayer("n", {
             14: {
                 title:() => "Synthesize.",
                 desc:() => "Gain 100% of stardust gain per second.",
-                cost:() => new Decimal(50),
+                cost:() => new Decimal(250),
                 unl() { return (hasUpg(this.layer, 13))},
             },
             21: {
