@@ -12,8 +12,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.1",
-	name: "Renewal, or \"i am dying slowly\"",
+	num: "0.0.2",
+	name: "Getting there, or \"what the hell is a \'balance\'\"",
 }
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -26,28 +26,31 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("s", 11)
+	return hasUpgrade("s", 11) || player.so.unl
 }
 
 // Calculate points/sec!
 function getPointGen() {
-	if(!canGenPoints())
-		return new Decimal(0)
-	let gain = new Decimal(1)
+	let gain = new Decimal(0)
 	gain = gain.add(getPointBase())
 	gain = gain.times(getPointMult())
 	return gain
 }
 function getPointBase(){
 	let gain = new Decimal(0)
+	if (hasUpgrade("s", 11)) gain = gain.add(1)
 	if (hasUpgrade("s", 12)) gain = gain.add(2)
 	if (hasUpgrade("s", 23)) gain = gain.add(layers["s"].upgrades[23].effect())
+	if (player.so.unlocked) gain = gain.add(buyableEffect("so",11)["first"])
 	return gain
 }
 function getPointMult(){
 	let gain = new Decimal(1)
 	if (hasUpgrade("s", 21)) gain = gain.times(2)
 	if (hasUpgrade("s", 13)) gain = gain.times(layers["s"].upgrades[13].effect())
+	if (player.n.unlocked) gain = gain.times(layers["n"].effect())
+	if (player.n.buyables[11].gte(1)) gain = gain.mul(buyableEffect("n",11)["first"])
+	if (player.n.buyables[12].gte(1)) gain = gain.mul(buyableEffect("n",12)["second"])
 	return gain
 }
 
@@ -61,7 +64,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e280000000"))
+	return player.points.gte(new Decimal("e20")) && player.s.points.gte(new Decimal("e21"))
 }
 
 
