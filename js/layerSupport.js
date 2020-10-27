@@ -167,3 +167,11 @@ const UP = 0
 const DOWN = 1
 const LEFT = 2
 const RIGHT = 3
+
+const color_e = "#8080D0"
+const color_s = "#404060"
+const color_so = "#fadb6b"
+const color_n = "#6541d1"
+const color_c = "#A0A0E0"
+
+const color_upg = "#77BF5F"

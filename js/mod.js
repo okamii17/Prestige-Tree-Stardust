@@ -12,8 +12,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.2",
-	name: "Getting there, or \"what the hell is a \'balance\'\"",
+	num: "0.0.3",
+	name: "Crystalline, or \"how can something so enticing have such awful side effects?\"",
 }
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -26,7 +26,7 @@ function getStartPoints(){
 
 // Determines if it should show points/sec
 function canGenPoints(){
-	return hasUpgrade("s", 11) || player.so.unl
+	return hasUpgrade("s", 11) || player.so.unlocked
 }
 
 // Calculate points/sec!
@@ -41,7 +41,7 @@ function getPointBase(){
 	if (hasUpgrade("s", 11)) gain = gain.add(1)
 	if (hasUpgrade("s", 12)) gain = gain.add(2)
 	if (hasUpgrade("s", 23)) gain = gain.add(layers["s"].upgrades[23].effect())
-	if (player.so.unlocked) gain = gain.add(buyableEffect("so",11)["first"])
+	if (player.so.buyables[11].gt(0)) gain = gain.add(buyableEffect("so",11)["first"])
 	return gain
 }
 function getPointMult(){
@@ -51,6 +51,8 @@ function getPointMult(){
 	if (player.n.unlocked) gain = gain.times(layers["n"].effect())
 	if (player.n.buyables[11].gte(1)) gain = gain.mul(buyableEffect("n",11)["first"])
 	if (player.n.buyables[12].gte(1)) gain = gain.mul(buyableEffect("n",12)["second"])
+	if (player.c.buyables[12].eq(1)) gain = gain.mul(buyableEffect("c",12))
+	if (player.c.buyables[22].eq(1) && player.points.lt(1e16)) gain = gain.mul(buyableEffect("c",22))
 	return gain
 }
 
@@ -64,7 +66,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e20")) && player.s.points.gte(new Decimal("e21"))
+	return player.c.points.eq(5)
 }
 
 
@@ -73,5 +75,5 @@ function isEndgame() {
 
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
-	return(3600000) // Default is 1 hour which is just arbitrarily large
+	return(900000) // Default is 1 hour which is just arbitrarily large
 }

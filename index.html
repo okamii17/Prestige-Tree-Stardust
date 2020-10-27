@@ -24,8 +24,7 @@
 		<div v-if="player.tab=='gameEnded'" class="fullWidth">
 			<br>
 			<h2>{{modInfo.name}} {{VERSION.withoutName}}</h2><br><br>
-			<h3>Congratulations! You have reached the end and beaten this game, but for now...</h3><br>
-			<h3>Please check the Discord to see if there are new content updates!</h3><br><br>
+			<h3>Congratulations! You have reached the end of this update</h3><br>
 			<div v-if="!player.timePlayedReset">It took you {{formatTime(player.timePlayed)}} to beat the game.</div>
 			<div v-if="player.timePlayedReset">Make sure that you record the time in your stream or else your speedrun won't count!</div>
 			<br>
@@ -35,9 +34,8 @@
 			<a class="link" href="https://discord.gg/F3xveHV" target="_blank" v-bind:style="modInfo.discordLink ? {'font-size': '16px'} : {}">The Modding Tree Discord</a><br>
 			<a class="link" href="http://discord.gg/wwQfgPa" target="_blank" v-bind:style="{'font-size': '16px'}">Main Prestige Tree server</a><br>
 			<br><br>
-			If you would like to speedrun this, press Play Again and record your attempt, then submit on the Discord Server in the channel #speedrun-submissions.
+			If you're wondering, the endpoint is five crystals. More content is to come later!
 			<br><br><br>
-			<h1>Oh, you are still reading this?</h1>
 			<br>
 		</div>
 		<div v-if="player.tab=='changelog'" class="col right">
