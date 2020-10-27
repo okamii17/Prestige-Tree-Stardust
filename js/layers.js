@@ -292,7 +292,7 @@ addLayer("so", {
                 title:() => "Constellation 1", // Optional, displayed at the top in a larger font
                 cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
                     let cost = Decimal.pow(2, x.pow(1.4))
-                    if(player.c.buyables[21].eq(1)) cost = Decimal.pow(2, x.pow(1.2))
+                    if(player.c.buyables[21].eq(1)) cost = Decimal.pow(2, x.pow(1.3))
                     if(hasUpgrade("so",23)) cost = cost.div(upgradeEffect("so",23))
                     return cost.floor()
                 },
@@ -324,7 +324,7 @@ addLayer("so", {
                 title:() => "Constellation 2", // Optional, displayed at the top in a larger font
                 cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
                     let cost = Decimal.pow(2, x.pow(1.4)).times(1e6)
-                    if(player.c.buyables[21].eq(1)) cost = Decimal.pow(2, x.pow(1.2)).times(1e6)
+                    if(player.c.buyables[21].eq(1)) cost = Decimal.pow(2, x.pow(1.3)).times(1e6)
                     if(hasUpgrade("so",23)) cost = cost.div(upgradeEffect("so",23))
                     return cost.floor()
                 },
@@ -948,7 +948,7 @@ addLayer("c", {
                 return cost
             },
             effect(x=player[this.layer].buyables[this.id]) { // Effects of owning x of the items, x is a decimal
-                eff = Decimal.pow(0.2, x)
+                eff = Decimal.pow(0.1, x)
                 return eff;
             },
             display() { // Everything else displayed in the buyable button after the title
