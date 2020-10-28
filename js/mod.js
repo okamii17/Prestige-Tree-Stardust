@@ -12,8 +12,8 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.0.3",
-	name: "Crystalline, or \"how can something so enticing have such awful side effects?\"",
+	num: "0.0.3a",
+	name: "the qol update",
 }
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
@@ -66,7 +66,7 @@ var displayThings = [
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.c.points.eq(5)
+	return player.s.points.gt(1e121)
 }
 
 

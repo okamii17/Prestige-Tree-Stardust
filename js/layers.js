@@ -140,7 +140,7 @@ addLayer("s", {
                      if(!player["s"].best) {
                          return new Decimal(1)
                      }
-                     return player["s"].best.add(1).pow(1/5)
+                     return player["s"].best.add(1).pow(1/15)
                 },
                 style() {
                     if (hasUpgrade(this.layer, this.id)) return {
@@ -604,7 +604,7 @@ addLayer("n", {
                         if(!eff.first) eff.first = new Decimal(1)
                     }
                     if (x.gte(0)) {
-                        eff.second = Decimal.pow(3, x.pow(0.5))
+                        eff.second = Decimal.pow(3, x.pow(0.8))
                         if(hasUpgrade("n",23)) eff.second = eff.second.times(upgradeEffect("n",23))
                     }
                     return eff;
@@ -648,7 +648,7 @@ addLayer("n", {
                         eff.first = eff.first.max(1)
                         if(!eff.first) eff.first = new Decimal(1)
                     }
-                    eff.second = Decimal.pow(3, x.pow(0.5))
+                    eff.second = Decimal.pow(3, x.pow(0.8))
                     if(hasUpgrade("n",23)) eff.second = eff.second.times(upgradeEffect("n",23))
                     return eff;
                 },
@@ -740,7 +740,7 @@ addLayer("n", {
                 title:() => "Duplicate.",
                 description:() => "Double nebulae and star gain.",
                 cost:() => new Decimal(10),
-                unlocked() { return (hasUpgrade(this.layer, 11))},
+                unlocked() { return player[this.layer].unlocked},
                 style() {
                     if (hasUpgrade(this.layer, this.id)) return {
                     'border-color': color_n 
@@ -757,9 +757,11 @@ addLayer("n", {
                 title:() => "Abate.",
                 description:() => "Nebulae nerfs are reduced by unspent nebulae, hardcapped at /1.",
                 cost:() => new Decimal(400),
-                unlocked() { return (hasUpgrade(this.layer, 12))},
+                unlocked() { return player[this.layer].unlocked},
                 effect() {
-                  return player[this.layer].points.add(5).log(700).add(1)
+                  let eff = player[this.layer].points.add(5).log(700).add(1)
+                  if(player.c.buyables[23].eq(1)) eff = eff.pow(3).times(75000)
+                  return eff
                 },
                 style() {
                     if (hasUpgrade(this.layer, this.id)) return {
@@ -776,7 +778,7 @@ addLayer("n", {
                 title:() => "Spawn.",
                 description:() => "Gain 10% of stardust gain per second.",
                 cost:() => new Decimal(1000000),
-                unlocked() { return (hasUpgrade(this.layer, 13) || player.c.unlocked)},
+                unlocked() { return player[this.layer].unlocked},
                 style() {
                     if (hasUpgrade(this.layer, this.id)) return {
                     'border-color': color_s 
@@ -850,9 +852,6 @@ addLayer("n", {
                 },
             },
         },
-        update(diff) {
-            if (hasUpgrade("n",14)) generatePoints("s", diff / 10)
-          },
         hotkeys: [
             {key: "n", 
             description: "n: reset your stardust for nebulas",
@@ -943,7 +942,7 @@ addLayer("c", {
         21: {
             title: "Stellate", // Optional, displayed at the top in a larger font
             cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
-                if (x.eq(0)) cost = 15
+                if (x.eq(0)) cost = 10
                 else cost = Infinity
                 return cost
             },
@@ -953,7 +952,7 @@ addLayer("c", {
             },
             display() { // Everything else displayed in the buyable button after the title
                 first = "Constellation cost scaling is reduced."
-                player[this.layer].buyables[this.id].eq(0) ? last = "\n 15 shards" : last = "\n ✓"
+                player[this.layer].buyables[this.id].eq(0) ? last = "\n 10 shards" : last = "\n ✓"
                 return first + last
             },
             unlocked() { return player[this.layer].unlocked }, 
@@ -968,20 +967,20 @@ addLayer("c", {
                 if(player[this.layer].buyables[this.id].eq(1)) return {
                     'background-color': color_upg,
                     'border-color': color_so,
-                    'height': '125px',
-                    'width': '125px'
+                    'height': '100px',
+                    'width': '100px'
                     }
                     return {
                     'border-color': color_so,
-                    'height': '125px',
-                    'width': '125px'
+                    'height': '100px',
+                    'width': '100px'
                     }
             },
         },
         31: {
             title: "Form", // Optional, displayed at the top in a larger font
             cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
-                if (x.eq(0)) cost = 10
+                if (x.eq(0)) cost = 2
                 else cost = Infinity
                 return cost
             },
@@ -991,7 +990,7 @@ addLayer("c", {
             },
             display() { // Everything else displayed in the buyable button after the title
                 first = "Constellations are bought automatically."
-                player[this.layer].buyables[this.id].eq(0) ? last = "\n 10 shards" : last = "\n ✓"
+                player[this.layer].buyables[this.id].eq(0) ? last = "\n 2 shards" : last = "\n ✓"
                 return first + last
             },
             unlocked() { return player[this.layer].unlocked }, 
@@ -1171,17 +1170,83 @@ addLayer("c", {
                     }
             },
         },
+        23: {
+            title: "Abate II", // Optional, displayed at the top in a larger font
+            cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                if (x.eq(0)) cost = 11
+                else cost = Infinity
+                return cost
+            },
+            effect(x=player[this.layer].buyables[this.id]) { // Effects of owning x of the items, x is a decimal
+                eff = Decimal.pow(1, x)
+                return eff;
+            },
+            display() { // Everything else displayed in the buyable button after the title
+                first = "Abate's effect is massively increased."
+                player[this.layer].buyables[this.id].eq(0) ? last = "\n 11 shards" : last = "\n ✓"
+                return first + last
+            },
+            unlocked() { return player[this.layer].unlocked }, 
+            canAfford() {
+                return layers["c"].getShards().sub(player[this.layer].spentOnBuyables).gte(tmp[this.layer].buyables[this.id].cost)},
+            buy() { 
+                cost = tmp[this.layer].buyables[this.id].cost
+                player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                player[this.layer].spentOnBuyables = player[this.layer].spentOnBuyables.add(cost) // This is a built-in system that you can use for respeccing but it only works with a single Decimal value
+            },
+            style() {
+                if(player[this.layer].buyables[this.id].eq(1)) return {
+                    'background-color': color_upg,
+                    'border-color': color_n,
+                    'height': '100px',
+                    'width': '100px'
+                    }
+                    return {
+                    'border-color': color_n,
+                    'height': '100px',
+                    'width': '100px'
+                    }
+            },
+        },
+        33: {
+            title: "Coalesce", // Optional, displayed at the top in a larger font
+            cost(x=player[this.layer].buyables[this.id]) { // cost for buying xth buyable, can be an object if there are multiple currencies
+                if (x.eq(0)) cost = 2
+                else cost = Infinity
+                return cost
+            },
+            effect(x=player[this.layer].buyables[this.id]) { // Effects of owning x of the items, x is a decimal
+                eff = Decimal.pow(1, x)
+                return eff;
+            },
+            display() { // Everything else displayed in the buyable button after the title
+                first = "Emission and Planetary nebulae can be bought automatically."
+                player[this.layer].buyables[this.id].eq(0) ? last = "\n 2 shards" : last = "\n ✓"
+                return first + last
+            },
+            unlocked() { return player[this.layer].unlocked }, 
+            canAfford() {
+                return layers["c"].getShards().sub(player[this.layer].spentOnBuyables).gte(tmp[this.layer].buyables[this.id].cost)},
+            buy() { 
+                cost = tmp[this.layer].buyables[this.id].cost
+                player[this.layer].buyables[this.id] = player[this.layer].buyables[this.id].add(1)
+                player[this.layer].spentOnBuyables = player[this.layer].spentOnBuyables.add(cost) // This is a built-in system that you can use for respeccing but it only works with a single Decimal value
+            },
+            style() {
+                if(player[this.layer].buyables[this.id].eq(1)) return {
+                    'background-color': color_upg,
+                    'border-color': color_n,
+                    'height': '100px',
+                    'width': '100px'
+                    }
+                    return {
+                    'border-color': color_n,
+                    'height': '100px',
+                    'width': '100px'
+                    }
+            },
+        },
     },
-    update(diff) {
-        if (player.c.buyables[32].eq(1)) {
-            generatePoints("so", diff / 10)
-            generatePoints("n", diff / 10)
-        }
-        if (player.c.buyables[31].eq(1)) {
-            if(layers["so"].buyables[11].canAfford()) layers["so"].buyables[11].buy()
-            if(layers["so"].buyables[12].canAfford()) layers["so"].buyables[12].buy()
-        }
-      },
     row: 2,
     position: 1,
     layerShown() {return hasUpgrade("s",32) || player.c.unlocked},
@@ -1206,7 +1271,7 @@ addLayer("stats", {
     tooltip() { // Optional, tooltip displays when the layer is locked
         return ("Statistics")
     },
-    color: "FFFFFF",
+    color: "#FFFFFF",
     resource: "", 
     type: "none",
     row: "side",
@@ -1384,5 +1449,235 @@ addLayer("stats", {
         },
     },
     layerShown() {return true}, 
+}, 
+)
+addLayer("automation", {
+    startData() { return {
+        unlocked: true,
+    }},
+    symbol: "",
+    tooltip() { // Optional, tooltip displays when the layer is locked
+        return ("Automata")
+    },
+    color: "#707070",
+    resource: "", 
+    type: "none",
+    row: "side",
+    layerShown() {return true}, 
+    midsection: [
+        ["display-text", function() {return "These are your automation toggles, which will appear when bought."}], ['blank','20px']
+    ],
+    clickables: {
+        rows: 9,
+        cols: 4,
+        11: {
+            title: "Stardust<br>10%",
+            display() { // Everything else displayed in the buyable button after the title
+                return getClickableState(this.layer, this.id)
+            },
+            canClick(){ return (hasUpgrade("n",14)) },
+            unlocked() { return (hasUpgrade("n",14)) },
+            onClick() { 
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        player[this.layer].clickables[this.id] = "OFF"
+                        break;
+                    default:
+                        player[this.layer].clickables[this.id] = "ON"
+                        break;
+                }
+            },
+            style() {
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        return {'background-color': 'green', 'border-color': color_s, 'height': '100px', 'width': '100px'}
+                        break;
+                    case "OFF":
+                        return {'background-color': 'red', 'border-color': color_s, 'height': '100px', 'width': '100px'}
+                        break;
+            }},
+        },
+        12: {
+            title: "Stars<br>10%",
+            display() { // Everything else displayed in the buyable button after the title
+                return getClickableState(this.layer, this.id)
+            },
+            canClick(){ return player.c.buyables[32].eq(1) },
+            unlocked() { return player.c.buyables[32].eq(1) },
+            onClick() { 
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        player[this.layer].clickables[this.id] = "OFF"
+                        break;
+                    default:
+                        player[this.layer].clickables[this.id] = "ON"
+                        break;
+                }
+            },
+            style() {
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        return {'background-color': 'green', 'border-color': color_so, 'height': '100px', 'width': '100px'}
+                        break;
+                    case "OFF":
+                        return {'background-color': 'red', 'border-color': color_so, 'height': '100px', 'width': '100px'}
+                        break;
+            }},
+        },
+        13: {
+            title: "Nebulae<br>10%",
+            display() { // Everything else displayed in the buyable button after the title
+                return getClickableState(this.layer, this.id)
+            },
+            canClick(){ return player.c.buyables[32].eq(1) },
+            unlocked() { return player.c.buyables[32].eq(1) },
+            onClick() { 
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        player[this.layer].clickables[this.id] = "OFF"
+                        break;
+                    default:
+                        player[this.layer].clickables[this.id] = "ON"
+                        break;
+                }
+            },
+            style() {
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        return {'background-color': 'green', 'border-color': color_n, 'height': '100px', 'width': '100px'}
+                        break;
+                    case "OFF":
+                        return {'background-color': 'red', 'border-color': color_n, 'height': '100px', 'width': '100px'}
+                        break;
+            }},
+        },
+        21: {
+            title: "Buy<br> Constellation 1",
+            display() { // Everything else displayed in the buyable button after the title
+                return getClickableState(this.layer, this.id)
+            },
+            canClick(){ return player.c.buyables[31].eq(1) },
+            unlocked() { return player.c.buyables[31].eq(1) },
+            onClick() { 
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        player[this.layer].clickables[this.id] = "OFF"
+                        break;
+                    default:
+                        player[this.layer].clickables[this.id] = "ON"
+                        break;
+                }
+            },
+            style() {
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        return {'background-color': 'green', 'border-color': color_so, 'height': '150px', 'width': '150px'}
+                        break;
+                    case "OFF":
+                        return {'background-color': 'red', 'border-color': color_so, 'height': '150px', 'width': '150px'}
+                        break;
+            }},
+        },
+        22: {
+            title: "Buy<br> Constellation 2",
+            display() { // Everything else displayed in the buyable button after the title
+                return getClickableState(this.layer, this.id)
+            },
+            canClick(){ return player.c.buyables[31].eq(1) },
+            unlocked() { return player.c.buyables[31].eq(1) },
+            onClick() { 
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        player[this.layer].clickables[this.id] = "OFF"
+                        break;
+                    default:
+                        player[this.layer].clickables[this.id] = "ON"
+                        break;
+                }
+            },
+            style() {
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        return {'background-color': 'green', 'border-color': color_so, 'height': '150px', 'width': '150px'}
+                        break;
+                    case "OFF":
+                        return {'background-color': 'red', 'border-color': color_so, 'height': '150px', 'width': '150px'}
+                        break;
+            }},
+        },
+        31: {
+            title: "Buy Emission Nebulae",
+            display() { // Everything else displayed in the buyable button after the title
+                return getClickableState(this.layer, this.id)
+            },
+            canClick(){ return player.c.buyables[33].eq(1) },
+            unlocked() { return player.c.buyables[33].eq(1) },
+            onClick() { 
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        player[this.layer].clickables[this.id] = "OFF"
+                        break;
+                    default:
+                        player[this.layer].clickables[this.id] = "ON"
+                        break;
+                }
+            },
+            style() {
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        return {'background-color': 'green', 'border-color': color_n, 'height': '150px', 'width': '150px'}
+                        break;
+                    case "OFF":
+                        return {'background-color': 'red', 'border-color': color_n, 'height': '150px', 'width': '150px'}
+                        break;
+            }},
+        },
+        32: {
+            title: "Buy Planetary Nebulae",
+            display() { // Everything else displayed in the buyable button after the title
+                return getClickableState(this.layer, this.id)
+            },
+            canClick(){ return player.c.buyables[33].eq(1) },
+            unlocked() { return player.c.buyables[33].eq(1) },
+            onClick() { 
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        player[this.layer].clickables[this.id] = "OFF"
+                        break;
+                    default:
+                        player[this.layer].clickables[this.id] = "ON"
+                        break;
+                }
+            },
+            style() {
+                switch(getClickableState(this.layer, this.id)){
+                    case "ON":
+                        return {'background-color': 'green', 'border-color': color_n, 'height': '150px', 'width': '150px'}
+                        break;
+                    case "OFF":
+                        return {'background-color': 'red', 'border-color': color_n, 'height': '150px', 'width': '150px'}
+                        break;
+            }},
+        },
+    },
+    update(diff) {
+        if (hasUpgrade("n",14) && getClickableState(this.layer, 11) == "ON") generatePoints("s", diff / 10)
+        if (player.c.buyables[31].eq(1) && getClickableState(this.layer, 21) == "ON") {
+            if(layers["so"].buyables[11].canAfford()) layers["so"].buyables[11].buy()
+        }
+        if (player.c.buyables[31].eq(1) && getClickableState(this.layer, 22) == "ON" && hasUpgrade("so",22)) {
+            if(layers["so"].buyables[12].canAfford()) layers["so"].buyables[12].buy()
+        }
+        if (player.c.buyables[32].eq(1) && getClickableState(this.layer, 12) == "ON") generatePoints("so", diff / 10)
+        
+        if (player.c.buyables[32].eq(1) && getClickableState(this.layer, 13) == "ON") generatePoints("n", diff / 10)
+        if (player.c.buyables[33].eq(1) && getClickableState(this.layer, 31) == "ON") {
+            if(layers["n"].buyables[11].canAfford()) layers["n"].buyables[11].buy()
+        }
+        if (player.c.buyables[33].eq(1) && getClickableState(this.layer, 32) == "ON") {
+            if(layers["n"].buyables[14].canAfford()) layers["n"].buyables[14].buy()
+        }
+        
+      },
 }, 
 )
