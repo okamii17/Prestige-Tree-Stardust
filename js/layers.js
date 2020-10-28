@@ -242,7 +242,7 @@ addLayer("s", {
         resetDescription: "Use your energy to collect ",
         layerShown(){return true},
         style() {return {
-            'background-color': '#101018' 
+            'background-color': '#101018',
          }},
 })
 addLayer("so", {
@@ -499,7 +499,7 @@ addLayer("so", {
     branches: [["s", 5]],
     resetDescription: "Use your stardust to form ",
     style() {return {
-        'background-color': '#181810' 
+        'background-color': '#181810',
      }},
 }, )
 addLayer("n", {
@@ -760,7 +760,7 @@ addLayer("n", {
                 unlocked() { return player[this.layer].unlocked},
                 effect() {
                   let eff = player[this.layer].points.add(5).log(700).add(1)
-                  if(player.c.buyables[23].eq(1)) eff = eff.pow(3).times(75000)
+                  if(player.c.buyables[23].eq(1)) eff = eff.pow(2.5).times(3500)
                   return eff
                 },
                 style() {
@@ -861,7 +861,7 @@ addLayer("n", {
     layerShown() {return true},  // Each pair corresponds to a line added to the tree when this node is unlocked. The letter is the other end of the line, and the number affects the color, 1 is default
     branches: [["s", 6]],
     style() {return {
-        'background-color': '#181028' 
+        'background-color': '#181028', 
      }},
      resetDescription: "Coalesce your stardust into ",
 },)
@@ -1257,9 +1257,9 @@ addLayer("c", {
     hotkeys: [
         {key: "c", description: "c: compress stardust into crystals", onPress(){if (canReset(this.layer)) doReset(this.layer)}},
     ],
-    style() {return {
-        'background-color': '#101018' 
-     }},
+    style() { return{
+        'background-color': '#101018'
+    }},
      resetDescription: "Compress your stardust into ",
 }, 
 )
